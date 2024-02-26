@@ -59,8 +59,8 @@ function writeToFile(fileName, info) {
 }
 
 // function to generate data for Manager
-function dataQuestioning() {
-    inquirer.prompt(questions1)
+async function dataQuestioning() {
+    await inquirer.prompt(questions1)
     .then((answers1) => {
         const employee = new Employee(answers1.name, answers1.id, answers1.email)
         const manager = new Manager(answers1.name, answers1.officeNumber)
@@ -75,7 +75,7 @@ function dataQuestioning() {
         console.log("first");
     })
 
-    inquirer.prompt(questions0)
+    await inquirer.prompt(questions0)
     .then((answers0) => {
     // create a html file and populate with the data
         switch (answers0.choice) {
@@ -104,7 +104,7 @@ function dataQuestioning() {
                 ])
                 .then((answers2) => {
                 const engineer = new Engineer(answers2.engineerName, answers2.engineerId,answers2.engineerEmail, answers2.engineerGithub )
-                dataQuestioning();
+                // dataQuestioning();
                  })
             break;
         
@@ -133,7 +133,7 @@ function dataQuestioning() {
                 ])
                 .then((answers3) => {
                 const intern = new Intern(answers3.internName,answers3.internId,answers3.internEmail, answers3.internSchool )
-                dataQuestioning();
+                // dataQuestioning();
                 })
             break
             
@@ -150,31 +150,3 @@ function dataQuestioning() {
 // function call to initialize program
 dataQuestioning();
 
-// function repeatOptions() {
-//     inquirer.prompt(questions0)
-//     .then((answers0) => {
-//     // create a html file and populate with the data
-//     if (answers0.options === 'Finish building the team') {
-//         writeToFile ("./index.html", render());
-//         console.log("building html");
-//         return
-//         }
-//     if (answers0.options === 'Add an engineer') {
-//         inquirer.prompt(questions2)
-//         .then((answers2) => {
-//             const engineer = new Engineer(answers2.engineerName, answers2.engineerId,answers2.engineerEmail, answers2.engineerGithub )
-//         })
-//         repeatOptions();
-//     }
-//     if (answers0.options === 'Add an intern') {
-//         inquirer.prompt(questions3)
-//         .then((answers3) => {
-//             const intern = new Intern(answers3.internName,answers3.internId,answers3.internEmail, answers3.internSchool )
-//             })
-//         repeatOptions();
-//     }
-//     })
-
-// }
-
-// // repeatOptions()
