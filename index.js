@@ -13,19 +13,107 @@ const Employee = require("./lib/Employee.js");
 
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
+const questions1 = [
+    {
+        type: 'input',
+        name: 'name',
+        message: 'What is the Name of your Employee ?',
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: 'What is the ID of your Employee ?',
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'What is the Email of your Employee ?',
+    },
+    {
+        type: 'input',
+        name: 'officeNumber',
+        message: 'What is the Office Number of your Employee ?',
+    },
+    {
+        type: 'list',
+        name: 'options',
+        choices: ['Add an engineer', 'Add an intern', 'Finish buiding the team'],
+        message: 'Please select an option : ',
+    }
+]
 
+const questions2 = [
+    {
+        type: 'input',
+        name: 'engineerName',
+        message: 'What is the Name of your Engineer ?',
+    },
+    {
+        type: 'input',
+        name: 'engineerId',
+        message: 'What is the ID of your Engineer ?',
+    },
+    {
+        type: 'input',
+        name: 'engineerEmail',
+        message: 'What is the Email of your Engineer ?',
+    },
+    {
+        type: 'input',
+        name: 'engineerGithub',
+        message: 'What is the GitHub username of your Engineer ?',
+    },
+]
 
+const questions3 = [
+    {
+        type: 'input',
+        name: 'internName',
+        message: 'What is the Name of your Intern ?',
+    },
+    {
+        type: 'input',
+        name: 'internId',
+        message: 'What is the ID of your Intern ?',
+    },
+    {
+        type: 'input',
+        name: 'internEmail',
+        message: 'What is the Email of your Intern ?',
+    },
+    {
+        type: 'input',
+        name: 'internSchool',
+        message: 'What is the School of your Intern ?',
+    }
+]
+
+// function to write README file
+function writeToFile(fileName, info) {
+    fs.writeFile(fileName, info, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('file was saved as README.md');
+        }
+    });
+
+}
+
+// function to generate html
 function generateHtml() {
     inquirer.prompt(questions1)
     .then((answers1) => {
-        const employee = new Employee()
+        const employee = new Employee(answers1.name, answers1.id, answers1.email)
+        console.log(employee);
         employee.getName();
         employee.getID();
         employee.getEmail();
         employee.getRole();
-
+        console.log("first");
         if (answers1.options === 'Finish buiding the team') {
-            writeToFile ("./index.html", render(team));
+            writeToFile ("./index.html", render());
+            console.log("second");
         }
         
     })
