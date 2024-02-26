@@ -33,60 +33,18 @@ const questions1 = [
         type: 'input',
         name: 'officeNumber',
         message: 'What is the Office Number of your Employee ?',
-    },
+    }
+];
+
+const questions0 = [
     {
         type: 'list',
         name: 'options',
-        choices: ['Add an engineer', 'Add an intern', 'Finish buiding the team'],
+        choices: ['Add an engineer', 'Add an intern', 'Finish building the team'],
         message: 'Please select an option : ',
     }
 ]
 
-const questions2 = [
-    {
-        type: 'input',
-        name: 'engineerName',
-        message: 'What is the Name of your Engineer ?',
-    },
-    {
-        type: 'input',
-        name: 'engineerId',
-        message: 'What is the ID of your Engineer ?',
-    },
-    {
-        type: 'input',
-        name: 'engineerEmail',
-        message: 'What is the Email of your Engineer ?',
-    },
-    {
-        type: 'input',
-        name: 'engineerGithub',
-        message: 'What is the GitHub username of your Engineer ?',
-    },
-]
-
-const questions3 = [
-    {
-        type: 'input',
-        name: 'internName',
-        message: 'What is the Name of your Intern ?',
-    },
-    {
-        type: 'input',
-        name: 'internId',
-        message: 'What is the ID of your Intern ?',
-    },
-    {
-        type: 'input',
-        name: 'internEmail',
-        message: 'What is the Email of your Intern ?',
-    },
-    {
-        type: 'input',
-        name: 'internSchool',
-        message: 'What is the School of your Intern ?',
-    }
-]
 
 // function to write README file
 function writeToFile(fileName, info) {
@@ -100,8 +58,8 @@ function writeToFile(fileName, info) {
 
 }
 
-// function to generate html
-function generateHtml() {
+// function to generate data for Manager
+function dataQuestioning() {
     inquirer.prompt(questions1)
     .then((answers1) => {
         const employee = new Employee(answers1.name, answers1.id, answers1.email)
@@ -115,30 +73,108 @@ function generateHtml() {
         manager.getRole();
 
         console.log("first");
-        if (answers1.options === 'Add an engineer') {
-            inquirer.prompt(questions2)
-            .then((answers2) => {
-                const engineer = new Engineer(answers2.engineerName,answers2.engineerId,answers2.engineerEmail, answers2.engineerGithub )
-            })
-        }
-        if (answers1.options === 'Add an intern') {
-            inquirer.prompt(questions3)
-            .then((answers3) => {
-                const intern = new Intern(answers3.internName,answers3.internId,answers3.internEmail, answers3.internSchool )
-                })
-        }
-        // create a html file and populate with the data
-        if (answers1.options === 'Finish buiding the team') {
-            writeToFile ("./index.html", render());
-            console.log("second");
-        }
-        
     })
 
+    inquirer.prompt(questions0)
+    .then((answers0) => {
+    // create a html file and populate with the data
+        switch (answers0.choice) {
+            case 'Add an engineer':  
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'engineerName',
+                        message: 'What is the Name of your Engineer ?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'engineerId',
+                        message: 'What is the ID of your Engineer ?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'engineerEmail',
+                        message: 'What is the Email of your Engineer ?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'engineerGithub',
+                        message: 'What is the GitHub username of your Engineer ?',
+                    },
+                ])
+                .then((answers2) => {
+                const engineer = new Engineer(answers2.engineerName, answers2.engineerId,answers2.engineerEmail, answers2.engineerGithub )
+                dataQuestioning();
+                 })
+            break;
+        
+            case 'Add an intern':  
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'internName',
+                        message: 'What is the Name of your Intern ?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'internId',
+                        message: 'What is the ID of your Intern ?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'internEmail',
+                        message: 'What is the Email of your Intern ?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'internSchool',
+                        message: 'What is the School of your Intern ?',
+                    }
+                ])
+                .then((answers3) => {
+                const intern = new Intern(answers3.internName,answers3.internId,answers3.internEmail, answers3.internSchool )
+                dataQuestioning();
+                })
+            break
+            
+            case 'Finish building the team':
+                writeToFile ("./index.html", render());
+                console.log("building html");
+            break
+            }
+    })
+        
+        
 }
 
 // function call to initialize program
-generateHtml();
+dataQuestioning();
 
+// function repeatOptions() {
+//     inquirer.prompt(questions0)
+//     .then((answers0) => {
+//     // create a html file and populate with the data
+//     if (answers0.options === 'Finish building the team') {
+//         writeToFile ("./index.html", render());
+//         console.log("building html");
+//         return
+//         }
+//     if (answers0.options === 'Add an engineer') {
+//         inquirer.prompt(questions2)
+//         .then((answers2) => {
+//             const engineer = new Engineer(answers2.engineerName, answers2.engineerId,answers2.engineerEmail, answers2.engineerGithub )
+//         })
+//         repeatOptions();
+//     }
+//     if (answers0.options === 'Add an intern') {
+//         inquirer.prompt(questions3)
+//         .then((answers3) => {
+//             const intern = new Intern(answers3.internName,answers3.internId,answers3.internEmail, answers3.internSchool )
+//             })
+//         repeatOptions();
+//     }
+//     })
 
+// }
 
+// // repeatOptions()
