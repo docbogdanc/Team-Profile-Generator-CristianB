@@ -105,12 +105,29 @@ function generateHtml() {
     inquirer.prompt(questions1)
     .then((answers1) => {
         const employee = new Employee(answers1.name, answers1.id, answers1.email)
+        const manager = new Manager(answers1.name, answers1.officeNumber)
+        
         console.log(employee);
         employee.getName();
-        employee.getID();
+        employee.getId();
         employee.getEmail();
         employee.getRole();
+        manager.getRole();
+
         console.log("first");
+        if (answers1.options === 'Add an engineer') {
+            inquirer.prompt(questions2)
+            .then((answers2) => {
+                const engineer = new Engineer(answers2.engineerName,answers2.engineerId,answers2.engineerEmail, answers2.engineerGithub )
+            })
+        }
+        if (answers1.options === 'Add an intern') {
+            inquirer.prompt(questions3)
+            .then((answers3) => {
+                const intern = new Intern(answers3.internName,answers3.internId,answers3.internEmail, answers3.internSchool )
+                })
+        }
+        // create a html file and populate with the data
         if (answers1.options === 'Finish buiding the team') {
             writeToFile ("./index.html", render());
             console.log("second");
