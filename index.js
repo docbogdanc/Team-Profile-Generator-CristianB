@@ -140,7 +140,7 @@ async function dataQuestioning2() {
 
 
             writeToFile ("./index.html", render(teamMemb));
-
+        }
     })
 }
 
