@@ -11,6 +11,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./src/page-template.js");
 const Employee = require("./lib/Employee.js");
 
+// array got members of the team
+const teamMemb = []
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 const questions1 = [
@@ -98,7 +100,7 @@ function writeToFile(fileName, info) {
         if (err) {
             console.error(err);
         } else {
-            console.log('file was saved as README.md');
+            console.log('file was saved as index.html');
         }
     });
 
@@ -109,16 +111,16 @@ async function dataQuestioning() {
     await inquirer.prompt(questions1)
     .then((answers1) => {
         const employee = new Employee(answers1.name, answers1.id, answers1.email)
-        const manager = new Manager(answers1.name, answers1.officeNumber)
-        
-        console.log(employee);
+        const manager = new Manager(answers1.name, answers1.id, answers1.email, answers1.officeNumber)
+
+        teamMemb.push(manager)
+
         employee.getName();
         employee.getId();
         employee.getEmail();
         employee.getRole();
         manager.getRole();
 
-        console.log("first");
         dataQuestioning2();
     })
 
@@ -127,16 +129,18 @@ async function dataQuestioning() {
 async function dataQuestioning2() {
     await inquirer.prompt(questions0)
     .then((answers0) => {
-        console.log(answers0);
+  
         if (answers0.options === 'Add an engineer'){ 
-            console.log("engineer question");
+ 
             engineerQuestions();}
         if (answers0.options === 'Add an intern') {  
-            console.log("intern questions");
+  
             internQuestions();}
         if (answers0.options === 'Finish building the team'){
-            writeToFile ("./index.html", render());
-            console.log("building html");}
+
+
+            writeToFile ("./index.html", render(teamMemb));
+
     })
 }
 
@@ -144,6 +148,8 @@ async function engineerQuestions () {
     await inquirer.prompt(questionsE)
     .then((answersE) => {
         const engineer = new Engineer(answersE.engineerName, answersE.engineerId, answersE.engineerEmail, answersE.engineerGithub);
+        teamMemb.push(engineer);
+
         dataQuestioning2();
     })
 }
@@ -152,6 +158,8 @@ async function internQuestions () {
     await inquirer.prompt(questionsI)
     .then((answersI) => {
         const intern = new Intern(answersI.internName, answersI.internId, answersI.internEmail, answersI.internSchool);
+        teamMemb.push(intern);
+
         dataQuestioning2();
     })
 }

@@ -1,7 +1,13 @@
+
 // creates the team
 const generateTeam = (team) => {
+    // console.log(employee)
+    // console.log(manager);
+    // console.log(engineer);
+    // console.log(intern);
   // creates the manager html
   const generateManager = (manager) => {
+
     return `
         <div class="card employee-card">
             <div class="card-header">
