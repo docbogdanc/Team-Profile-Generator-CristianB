@@ -128,7 +128,7 @@ async function dataQuestioning2() {
       internQuestions();
     }
     if (answers0.options === "Finish building the team") {
-      writeToFile("./index.html", render(teamMemb));
+      writeToFile("./team.html", render(teamMemb));
     }
   });
 }
