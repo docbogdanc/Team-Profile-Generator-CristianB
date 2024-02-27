@@ -45,6 +45,52 @@ const questions0 = [
     }
 ]
 
+const questionsE = [
+    {
+        type: 'input',
+        name: 'engineerName',
+        message: 'What is the Name of your Engineer ?',
+    },
+    {
+        type: 'input',
+        name: 'engineerId',
+        message: 'What is the ID of your Engineer ?',
+    },
+    {
+        type: 'input',
+        name: 'engineerEmail',
+        message: 'What is the Email of your Engineer ?',
+    },
+    {
+        type: 'input',
+        name: 'engineerGithub',
+        message: 'What is the GitHub username of your Engineer ?',
+    },
+]
+
+const questionsI = [
+    {
+        type: 'input',
+        name: 'internName',
+        message: 'What is the Name of your Intern ?',
+    },
+    {
+        type: 'input',
+        name: 'internId',
+        message: 'What is the ID of your Intern ?',
+    },
+    {
+        type: 'input',
+        name: 'internEmail',
+        message: 'What is the Email of your Intern ?',
+    },
+    {
+        type: 'input',
+        name: 'internSchool',
+        message: 'What is the School of your Intern ?',
+    }
+]
+
 
 // function to write README file
 function writeToFile(fileName, info) {
@@ -73,79 +119,45 @@ async function dataQuestioning() {
         manager.getRole();
 
         console.log("first");
+        dataQuestioning2();
     })
 
+}
+
+async function dataQuestioning2() {
     await inquirer.prompt(questions0)
     .then((answers0) => {
-    // create a html file and populate with the data
-        switch (answers0.choice) {
-            case 'Add an engineer':  
-                inquirer.prompt([
-                    {
-                        type: 'input',
-                        name: 'engineerName',
-                        message: 'What is the Name of your Engineer ?',
-                    },
-                    {
-                        type: 'input',
-                        name: 'engineerId',
-                        message: 'What is the ID of your Engineer ?',
-                    },
-                    {
-                        type: 'input',
-                        name: 'engineerEmail',
-                        message: 'What is the Email of your Engineer ?',
-                    },
-                    {
-                        type: 'input',
-                        name: 'engineerGithub',
-                        message: 'What is the GitHub username of your Engineer ?',
-                    },
-                ])
-                .then((answers2) => {
-                const engineer = new Engineer(answers2.engineerName, answers2.engineerId,answers2.engineerEmail, answers2.engineerGithub )
-                // dataQuestioning();
-                 })
-            break;
-        
-            case 'Add an intern':  
-                inquirer.prompt([
-                    {
-                        type: 'input',
-                        name: 'internName',
-                        message: 'What is the Name of your Intern ?',
-                    },
-                    {
-                        type: 'input',
-                        name: 'internId',
-                        message: 'What is the ID of your Intern ?',
-                    },
-                    {
-                        type: 'input',
-                        name: 'internEmail',
-                        message: 'What is the Email of your Intern ?',
-                    },
-                    {
-                        type: 'input',
-                        name: 'internSchool',
-                        message: 'What is the School of your Intern ?',
-                    }
-                ])
-                .then((answers3) => {
-                const intern = new Intern(answers3.internName,answers3.internId,answers3.internEmail, answers3.internSchool )
-                // dataQuestioning();
-                })
-            break
-            
-            case 'Finish building the team':
-                writeToFile ("./index.html", render());
-                console.log("building html");
-            break
-            }
+        console.log(answers0);
+        if (answers0.options === 'Add an engineer'){ 
+            console.log("engineer question");
+            engineerQuestions();}
+        if (answers0.options === 'Add an intern') {  
+            console.log("intern questions");
+            internQuestions();}
+        if (answers0.options === 'Finish building the team'){
+            writeToFile ("./index.html", render());
+            console.log("building html");}
     })
-        
-        
 }
+
+async function engineerQuestions () {
+    await inquirer.prompt(questionsE)
+    .then((answersE) => {
+        const engineer = new Engineer(answersE.engineerName, answersE.engineerId, answersE.engineerEmail, answersE.engineerGithub);
+        dataQuestioning2();
+    })
+}
+
+async function internQuestions () {
+    await inquirer.prompt(questionsI)
+    .then((answersI) => {
+        const intern = new Intern(answersI.internName, answersI.internId, answersI.internEmail, answersI.internSchool);
+        dataQuestioning2();
+    })
+}
+
+
+
 
 // function call to initialize program
 dataQuestioning();
